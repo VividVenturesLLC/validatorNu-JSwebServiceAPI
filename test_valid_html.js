@@ -1,4 +1,4 @@
-/* Validate an HTML target document 
+/* Validate an HTML target document
 *******************************************************************************
    Description :
            This script will send the contents of the local web
@@ -202,9 +202,6 @@ function sendURLData(){
    //console.log("validate: "+ validate);//debug only
 
    var oXHR = new XMLHttpRequest();
-   oXHR.open("GET", validate,true);
-   oXHR.overrideMimeType("text/html; charset=UTF-8");
-   oXHR.send();
 
    oXHR.onreadystatechange = function(){
        if (oXHR.readyState===1){//OPENED
@@ -221,10 +218,13 @@ function sendURLData(){
            // output data before the scope is lost, by placing into an html tag
            displayMessages(validationTestResults);
            var vtrStatus = getStatus(validationTestResults);
-           console.log("HTML5 validation status: " + vtrStatus);// this is the message you want 
+           console.log("HTML5 validation status: " + vtrStatus);// this is the message you want
            console.log("<------- Ending AJAX call in script: test_valid_html.js -------------->");
        }
     };//end onreadystate change
+   oXHR.open("GET", validate,true);
+   oXHR.overrideMimeType("text/html; charset=UTF-8");
+   oXHR.send();
 }//end function sendURLData()
 //=====================================================================
 
@@ -282,9 +282,6 @@ function sendFileData(){
           formData.append("content", blob);
 
           var oXHR = new XMLHttpRequest();
-          oXHR.open("POST", validate);
-          oXHR.send(formData);
-
           var validationTestResults = null;//expect response from validate webservice
           oXHR.onreadystatechange = function(){
               //the other readyState events 0..3 could be handled here too
@@ -305,10 +302,13 @@ function sendFileData(){
                  // remember all the variables lose scope when leaving this function
            //document.getElementById("validation_log").innerHTML=vtrStatus;
 
-                  console.log("HTML5 validation status: " + vtrStatus);// this is the message you want 
+                  console.log("HTML5 validation status: " + vtrStatus);// this is the message you want
                   console.log("<------- Ending AJAX call in script: test_valid_html.js -------------->");//debug only
               }
           };//end onreadystate change
+
+          oXHR.open("POST", validate);
+          oXHR.send(formData);
 }
 //=====================================================================
 
@@ -375,7 +375,7 @@ console.log("<------- Starting script: test_valid_html.js -------------->");//de
         console.log("schemeName: " + schemeName);//debug only
         sendURLData();//which also outputs results to console
         break;
-      default: console.log("schemeName: " + schemeName + " not validated");//debug only        
+      default: console.log("schemeName: " + schemeName + " not validated");//debug only
     }
     //end main logic
 console.log("<------- Ending synchronos part of script: test_valid_html.js -------------->");//debug only
